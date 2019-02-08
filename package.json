@@ -1,0 +1,22 @@
+{
+  "name": "graphql-lean",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1"
+  },
+  "devDependencies": {
+    "graphql": "^14.1.1",
+    "mockjs": "^1.0.1-beta3",
+    "yargs": "^12.0.5"
+  }
+}
