@@ -1,10 +1,10 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const schema = require("./schema/book");
-const argv = require("yargs").argv;
+const config = require("./argv.js");
 const chalk = require("chalk");
 
-console.log(argv);
+console.log(config.getArgv());
 
 const app = express();
 
@@ -17,7 +17,6 @@ app.use(
   })
 );
 
-app.listen(argv.port || 3000, () => {
-  console.log(chalk.green("now listening for requests on port 4000"));
+app.listen(config.port || 3000, () => {
+  console.log(chalk.green("now listening for requests on port 3000"));
 });
-
