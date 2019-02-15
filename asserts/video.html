@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <audio id="video" loop controls autoplay></audio>
+    <button class="btn">play</button>
+    <button class="pause">pause</button>
+    <button class="currenttime">currentTime</button>
+    <script>
+      var done = false;
+      let audio = document.querySelector("#video");
+      let pause = document.querySelector(".pause");
+      let currentTime = document.querySelector(".currenttime");
+      pause.onclick = function(ev) {
+        console.log(ev);
+        audio.pause();
+      };
+      currentTime.onclick = function(ev) {
+        console.log(ev);
+        console.log(audio.currentTime);
+      };
+      document.querySelector(".btn").onclick = function() {
+        let video = document.querySelector("#video");
+
+        fetch("http://localhost:3000/video", {
+          // body: JSON.stringify(data), // must match 'Content-Type' header
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, same-origin, *omit
+          headers: {
+            "content-type": "audio/mpeg"
+          },
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+          mode: "same-origin", // no-cors, cors, *same-origin
+          redirect: "follow", // manual, *follow, error
+          referrer: "no-referrer"
+        })
+          .then(res => {
+            return res.arrayBuffer();
+          })
+          .then(res => {
+            done = true;
+            console.log(res);
+            localStorage.setItem("video", JSON.stringify(res));
+            res = new Blob([res], { type: "audio/mpeg" });
+            cache = URL.createObjectURL(res);
+            video.src = cache;
+          });
+      };
+    </script>
+  </body>
+</html>

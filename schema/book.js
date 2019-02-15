@@ -1,5 +1,6 @@
 const graphql = require("graphql");
-const Mock = require("mockjs");
+const Book = require("../models/book");
+const Author = require("../models/author");
 
 const {
   GraphQLObjectType,
@@ -9,29 +10,6 @@ const {
   GraphQLInt,
   GraphQLList
 } = graphql;
-
-// dummy data
-var books = Mock.mock({
-  "data|1000-2000": [
-    {
-      "id|+1": 1,
-      name: "@first",
-      gener: "@sentence",
-      "authorId|100-1000": 100
-    }
-  ]
-});
-
-var author = Mock.mock({
-  "data|1000-2000": [
-    {
-      "id|+1": 1,
-      name: "@first",
-      "sex|1": ["man", "women"],
-      "age|30-50": 30
-    }
-  ]
-});
 
 const BookType = new GraphQLObjectType({
   name: "Book",
@@ -97,6 +75,30 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt }
+      },
+      resolve(parents, args) {
+        let author = new Author({
+          name: args.name,
+          age: args.age
+        });
+        return author.save(err => {
+          if (err) console.log(err);
+          console.log("success!");
+        });
+      }
+    }
+  }
+});
+
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation: Mutation
 });
