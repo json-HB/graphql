@@ -5,8 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
+    <style>
+      .container {
+        width: 30vw;
+        height: 30vh;
+        border: 1px solid #fdd;
+        margin: 0 auto;
+        position: relative;
+        transform-style: preserve-3d;
+        perspective: 0px;
+      }
+      .container > div {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border: 1px solid black;
+        border-radius: 50%;
+        transition: transform 0.3s linear 0s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        backface-visibility: hidden;
+      }
+      .container:hover > div:first-child {
+        transform: rotateY(0deg);
+      }
+      .container:hover > div:last-child {
+        transform: rotateY(180deg);
+      }
+      .container > div:first-child {
+        background: yellow;
+        transform: rotateY(180deg);
+      }
+      .container > div:last-child {
+        background: red;
+        transform: rotateY(0deg);
+      }
+    </style>
   </head>
   <body>
+    <div class="container">
+      <div class="face">face</div>
+      <div class="back">back</div>
+    </div>
     <audio id="video" loop controls autoplay></audio>
     <button class="btn">play</button>
     <button class="pause">pause</button>
